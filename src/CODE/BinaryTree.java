@@ -10,6 +10,7 @@ import java.util.Stack;
 
 public class BinaryTree {
 	Node root;
+	int numLeafNode = 0;
 	public BinaryTree() {
 		root = null;
 	}
@@ -188,7 +189,7 @@ public class BinaryTree {
 			return 0;
 	}
 	
-	//time- O(n) space- 
+	//time- O(n) space- O(n)
 	public void levelorderInReverse() {
 		Queue<Node> q = new LinkedList<>();
 		List<Integer> val = new ArrayList<>();
@@ -208,4 +209,57 @@ public class BinaryTree {
 		for(Integer i : val)
 			System.out.print(i + " ");
 	}
+	
+	//time- O(n) space- O(logn)
+	public void deleteTree(Node root) {
+		if(root != null) {
+			deleteTree(root.left);
+			deleteTree(root.right);
+			root.data = -1;
+		}
+	}
+	
+	//time- O(n) space- O(logn) for skewed tree it will be O(n)
+	public int heightOfTree(Node root) {
+		if(root == null) {
+			return 0;
+		}
+		return Math.max(heightOfTree(root.left), heightOfTree(root.right)) + 1;
+	}
+	
+	//time- O(n) space- O(n) because at all the leaf will be in queue and leaf is n/2 so approx n.
+	public int heightOfTreeNonRecursive(Node root) {
+		Queue<Node> q = new LinkedList<>();
+		int height = 0;
+		q.add(root);
+		q.add(null);
+		while(!q.isEmpty()) {
+			Node temp = q.remove();
+			if(temp != null) {
+				if(temp.left != null) {
+					q.add(temp.left);
+				}
+				if(temp.right != null) {
+					q.add(temp.right);
+				}			
+			}else if(!q.isEmpty()){
+				height += 1;
+				q.add(null);
+			}
+		}
+		return height;	
+	}
+	
+	public int numLeafNode(Node root) {
+		if(root != null) {
+			numLeafNode(root.left);
+			numLeafNode(root.right);
+			if(root.left == null && root.right == null) {
+				numLeafNode = numLeafNode + 1;
+				return numLeafNode;
+			}
+		}
+		return numLeafNode;
+	}
+	
 }

@@ -10,6 +10,7 @@ public class BinaryTreeMain {
 		BT.createBinaryTree(14);
 		BT.createBinaryTree(15);
 		BT.createBinaryTree(16);
+		BT.createBinaryTree(17);
 		
 //		System.out.println("Recursive PreOrder");
 //		BT.recursivePreOrder(BT.root);
@@ -24,11 +25,18 @@ public class BinaryTreeMain {
 //		System.out.println("\nLevel order");
 //		BT.levelorder(BT.root);
 		
-		System.out.println(BT.findMaxValue());
-		System.out.println(BT.findValue(18));
-		System.out.println(BT.findElementRecursion(BT.root, 18));
-		System.out.println(BT.sizeOfTree(BT.root));
-		BT.levelorderInReverse();
+//		System.out.println(BT.findMaxValue());
+//		System.out.println(BT.findValue(18));
+//		System.out.println(BT.findElementRecursion(BT.root, 18));
+//		System.out.println(BT.sizeOfTree(BT.root));
+//		BT.levelorderInReverse();
+		
+//		BT.deleteTree(BT.root);
+//		System.out.println(BT.root.data);
+		
+		System.out.println(BT.heightOfTree(BT.root) -1);
+		System.out.println(BT.heightOfTreeNonRecursive(BT.root));
+		System.out.println(BT.numLeafNode(BT.root));
 	}
 
 }
