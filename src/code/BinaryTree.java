@@ -1,4 +1,4 @@
-package CODE;
+package code;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -250,6 +250,7 @@ public class BinaryTree {
 		return height;	
 	}
 	
+	//time- O(n) space- O(logn) for balanced tree O(n) for skwed tree
 	public int numLeafNode(Node root) {
 		if(root != null) {
 			numLeafNode(root.left);
