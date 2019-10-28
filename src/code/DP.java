@@ -35,4 +35,35 @@ public class DP {
 		return knownResult[n];
 	}
 	
+	//time- O(numCoins^n) space- O(n)
+	public int coinChangeRecursive(int[] coins, int n, int count) {
+		if(n == 0)
+			return count+1;
+		
+		for(int i = 0; i < coins.length; i++) {
+			if(coins[i] <= n) {				
+				count = coinChangeRecursive(coins, n - coins[i], count);
+			}
+		}
+		return count;
+	}
+	
+	public int coinChangeDP(int[] coins, int n, int count) {
+		if(n == 0) {
+			return count + 1;
+		}
+		
+		if(knownResult[n] != -1) {
+			return count + knownResult[n];
+		}
+		
+		for(int i = 0; i < coins.length; i++) {
+			if(coins[i] <= n) {
+				count = coinChangeDP(coins, n - coins[i], count);
+			}
+		}
+		knownResult[n] = count;
+		return count;
+	}
+	
 }
