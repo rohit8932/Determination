@@ -48,6 +48,7 @@ public class DP {
 		return count;
 	}
 	
+	//time- O(n) space- O(n)
 	public int coinChangeDP(int[] coins, int n, int count) {
 		if(n == 0) {
 			return count + 1;
@@ -64,6 +65,24 @@ public class DP {
 		}
 		knownResult[n] = count;
 		return count;
+	}
+	
+	//time- O(n) space- O(n)
+	public int coinChangeBottomUp(int[] coins, int n) {
+		int[] arr = new int[n + 1];
+		arr[0] = 0;
+		
+		for(int i = 1; i <= n; i++) {
+			for(int j = 0; j < coins.length; j++) {
+				if(i - coins[j] >= 0) {
+					if(coins[j] == i) {
+						arr[i] += arr[i-coins[j]] + 1;
+					}
+					arr[i] += arr[i-coins[j]];
+				}
+			}
+		}
+		return arr[n];
 	}
 	
 }

@@ -6,8 +6,10 @@ public class DPMain {
 //		System.out.println(dp.fibonacciUsingRecursion(10));
 //		System.out.println(dp.fibonacciUsingDP(10));
 	
-		System.out.println(dp.coinChangeDP(new int[] {1, 2, 3}, 5, 0));
-		System.out.println(dp.coinChangeRecursive(new int[] {1, 2, 3}, 5, 0));
+//		System.out.println(dp.coinChangeDP(new int[] {1, 2, 3}, 2, 0));
+//		System.out.println(dp.coinChangeRecursive(new int[] {1, 2, 3}, 5, 0));
+		
+		System.out.println(dp.coinChangeBottomUp(new int[] {1, 2, 3}, 6));
 		
 	}
 	
