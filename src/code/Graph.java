@@ -17,10 +17,11 @@ public class Graph {
 	}
 	
 	static class Cell{
-		int x, y;
-		Cell(int x1, int y1){
+		int x, y, cost;
+		Cell(int x1, int y1, int c){
 			this.x = x1;
-			this.y = y1; 
+			this.y = y1;
+			this.cost = c;
 		}
 		public void add(int k, int l) {
 			this.x = this.x + k;
@@ -103,11 +104,12 @@ public class Graph {
 		return false;
 	}
 	
-	public void shortestPath(int[][] mat, Cell src, Cell destn) {
+	public void isPathAvailable(int[][] mat, Cell src, Cell destn) {
 		Queue<Cell> q = new LinkedList<>();
 		boolean[][] visited = new boolean[mat.length][mat.length];
 		int[] row = {-1, -1, -1, 0, 1, 1, 1, 0};
 		int[] col = {-1, -1, 1, 1, 1, 0, -1, -1};
+		boolean foundDestn = false;
 		
 		q.add(src);
 		visited[src.x][src.y] = true;
@@ -115,16 +117,19 @@ public class Graph {
 			Cell temp = q.remove();
 			System.out.println("( " + temp.x + "," + temp.y + " )");
 			if(temp.x == destn.x && temp.y == destn.y) {
+				foundDestn = true;
+				System.out.println("Path "+ foundDestn + " with cost " + temp.cost);
 				return;
 			}
 			for(int i = 0; i < 8; i ++) {
 				if (isValid(mat, temp.x + row[i], temp.y + col[i], visited)) {
-					q.add(new Cell(temp.x + row[i], temp.y + col[i]));
+					q.add(new Cell(temp.x + row[i], temp.y + col[i], temp.cost+1));
 					visited[temp.x + row[i]][temp.y + col[i]] = true;
 				}
 			}
 			
 		}
+		System.out.println("Path "+ foundDestn);
 		
 	}
 }

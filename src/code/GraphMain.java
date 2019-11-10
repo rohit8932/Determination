@@ -27,9 +27,9 @@ public class GraphMain {
 									 {0, 0, 1, 0, 1, 0, 0, 0},
 									 {0, 0, 1, 0, 1, 0, 0, 0},
 									 {0, 0, 0, 1, 0, 1, 0, 0},
-									 {0, 0, 0, 1, 0, 1, 0, 0},
+									 {0, 0, 0, 1, 0, 1, 1, 1},
 									 {0, 0, 0, 0, 0, 0, 0, 0}};		
-		graph.shortestPath(shortestPathMatrix, new Graph.Cell(0, 0), new Graph.Cell(7, 7));
+		graph.isPathAvailable(shortestPathMatrix, new Graph.Cell(0, 0, 0), new Graph.Cell(7, 7, 0));
 		}
 	}
 
