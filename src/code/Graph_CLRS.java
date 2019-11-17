@@ -8,12 +8,15 @@ import java.util.Stack;
 
 public class Graph_CLRS {
 	List<List<Vertex>> adjList = new ArrayList<>();
+	int time = 0;
 	enum Color {BLACK, GREY, WHITE};
 	static class Vertex{
 		int vertex;
 		Vertex pred;
 		Color color;
 		int distance;
+		int d_time; //d.time and f.time will be used for dfs 
+		int f_time;
 		Vertex(int v){
 			this.vertex = v;
 			this.pred = null;
@@ -41,19 +44,17 @@ public class Graph_CLRS {
 		}
 	}
 	
-	public void reset() {
-		for(int i = 0; i < adjList.size(); i++) {
-			for(Vertex v : adjList.get(i)) {
-				v.color = Color.WHITE;
-				v.pred = null;
-				v.distance = -1;
-			}
+	public void reset(List<Vertex> vertices) {
+		for (Vertex v : vertices) {
+			v.color = Color.WHITE;
+			v.pred = null;
+			v.distance = -1;
 		}
+
 	}
 	
 	//time- O(V+E) space- O(V)
 	public void bfs(Vertex s) {
-		reset(); //this is to ensure we are not re-using vertex which has been used.eg if you run bfs and dfs one after another it will give output correct
 		Queue<Vertex> q = new LinkedList<>();
 		q.add(s);
 		s.color = Color.WHITE;
@@ -78,7 +79,6 @@ public class Graph_CLRS {
 	
 	//time- O(V+E) space- O(V)
 	public void dfs(Vertex src) {
-		reset();
 		Stack<Vertex> s = new Stack<>();
 		s.push(src);
 		src.color = Color.GREY;
@@ -99,5 +99,37 @@ public class Graph_CLRS {
 			temp.color = Color.BLACK;
 		}
 	}
+	
+	
+	public void dfs_withTimeStamp(Vertex u) {
+		System.out.print(u.vertex + " ");
+		time = time + 1;
+		u.d_time = time;
+		u.color = Color.GREY;
+		for(Vertex v : adjList.get(u.vertex)) {
+			if(v.color.equals(Color.WHITE)) {
+				//from visited vertex to unvisited vertex is tree edge (normal use case)
+				System.out.println("Tree Edge "+ u.vertex + " -> " + v.vertex);
+				v.pred=u;
+				dfs_withTimeStamp(v);
+			}
+			else if(v.color.equals(Color.GREY)) {
+				//from grey node to grey node, which means child pointing to ancestor 
+				System.out.println("Back Edge "+ u.vertex + " -> " + v.vertex);
+			}else if(v.color.equals(Color.BLACK)) {
+				if(v.d_time < u.d_time) {
+				//from grey node to black, if ancestor finish time found which means current node reachable from pointed node
+					System.out.println("Cross Edge "+ u.vertex + " -> " + v.vertex);
+					return;
+				}
+				//from grey node to black, if ancestor finish time still not found which means current node reachable from pointed node
+				System.out.println("Forward Edge "+ u.vertex + " -> " + v.vertex);
+			}
+		}
+		u.color=Color.BLACK;
+		time = time + 1;
+		u.f_time = time;
+	}
+		
 
 }

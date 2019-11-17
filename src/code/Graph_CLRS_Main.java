@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import code.Graph_CLRS.Vertex;
-
 public class Graph_CLRS_Main {
 	public static void main(String[] args) {
 		/*
@@ -36,8 +34,18 @@ public class Graph_CLRS_Main {
 				new Graph_CLRS.Edge(vertices.get(2), vertices.get(5)));
 		g.graph(edges);
 		g.bfs(vertices.get(0));
+		g.reset(vertices); //this is to ensure we are not re-using vertex which has been used and changed properties
+								//eg if you run bfs and dfs one after another it will give output correct
 		System.out.println();
 		g.dfs(vertices.get(0));
+		System.out.println();
+		g.reset(vertices);
+		for(Graph_CLRS.Vertex v : vertices) {
+			if(v.color.equals(Graph_CLRS.Color.WHITE)) {
+				g.dfs_withTimeStamp(v);
+			}
+		}
+		
 	}
 
 }
