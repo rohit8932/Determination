@@ -34,8 +34,8 @@ public class Graph_CLRS {
 	}
 	
 	//time- O(E) space- O(E)
-	public void graph(List<Edge> edges) {
-		for(int i = 0; i < edges.size(); i++) {
+	public void graph(int V, List<Edge> edges) {
+		for(int i = 0; i < V; i++) {
 			adjList.add(i, new ArrayList<Vertex>());
 		}
 		
@@ -49,6 +49,8 @@ public class Graph_CLRS {
 			v.color = Color.WHITE;
 			v.pred = null;
 			v.distance = -1;
+			v.d_time = -1;
+			v.f_time = -1;
 		}
 
 	}
@@ -100,7 +102,7 @@ public class Graph_CLRS {
 		}
 	}
 	
-	
+	//time- space-
 	public void dfs_withTimeStamp(Vertex u) {
 		System.out.print(u.vertex + " ");
 		time = time + 1;
@@ -129,6 +131,33 @@ public class Graph_CLRS {
 		u.color=Color.BLACK;
 		time = time + 1;
 		u.f_time = time;
+	}
+	
+	public void dfs_withTimeStamp_nonRecusive(Vertex u) {
+		Stack<Vertex> s = new Stack<Graph_CLRS.Vertex>();
+		time = 0;
+		s.push(u);
+		u.color = Color.GREY;
+		u.pred = null;
+		u.distance = 0;
+		while(!s.empty()) {
+			Vertex temp = s.peek();
+			if(temp.color.equals(Color.GREY))
+				temp.d_time = ++time;
+			
+			for(Vertex v : adjList.get(temp.vertex)) {
+				if(v.color.equals(Color.WHITE)) {
+					v.color = Color.GREY;
+					v.pred = temp;
+					s.push(v);
+				}
+			}
+			temp.color = Color.BLACK;
+			if(s.peek().color.equals(Color.BLACK)) {
+				temp.f_time = ++time;
+				s.pop();
+			}
+		}
 	}
 		
 
