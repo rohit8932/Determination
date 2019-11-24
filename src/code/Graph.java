@@ -97,7 +97,7 @@ public class Graph {
 		}
 	}
 	
-	public boolean isValid(int[][] mat, int x, int y, boolean[][] visited) {
+	private boolean isValid(int[][] mat, int x, int y, boolean[][] visited) {
 		if (x >= 0 && x < mat.length && y >= 0 && y < mat.length && mat[x][y] != 1 && visited[x][y] == false) {
 			return true;
 		}

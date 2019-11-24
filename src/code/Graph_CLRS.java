@@ -102,7 +102,7 @@ public class Graph_CLRS {
 		}
 	}
 	
-	//time- space-
+	//time-O(V+E) space-O(V)
 	public void dfs_withTimeStamp(Vertex u) {
 		System.out.print(u.vertex + " ");
 		time = time + 1;
@@ -120,11 +120,11 @@ public class Graph_CLRS {
 				System.out.println("Back Edge "+ u.vertex + " -> " + v.vertex);
 			}else if(v.color.equals(Color.BLACK)) {
 				if(v.d_time < u.d_time) {
-				//from grey node to black, if ancestor finish time found which means current node reachable from pointed node
+					//from grey node to black, if ancestor start time is less than current node start time, means node belong to family
 					System.out.println("Cross Edge "+ u.vertex + " -> " + v.vertex);
 					return;
 				}
-				//from grey node to black, if ancestor finish time still not found which means current node reachable from pointed node
+				//from grey node to black, if ancestor start time more than current node, means node is from other family
 				System.out.println("Forward Edge "+ u.vertex + " -> " + v.vertex);
 			}
 		}
@@ -133,6 +133,7 @@ public class Graph_CLRS {
 		u.f_time = time;
 	}
 	
+	//time-O(V+E) space-O(V) 
 	public void dfs_withTimeStamp_nonRecusive(Vertex u) {
 		Stack<Vertex> s = new Stack<Graph_CLRS.Vertex>();
 		time = 0;
@@ -159,6 +160,53 @@ public class Graph_CLRS {
 			}
 		}
 	}
-		
-
+	
+	//time- O(V+E) space- O(V)
+	public void detectCycle(Vertex u) {
+		u.color = Color.GREY;
+		System.out.print(u.vertex + " ");
+		for(Vertex v : adjList.get(u.vertex)) {
+			if(v.color.equals(Color.WHITE)) {
+				detectCycle(v);
+			}
+			if(v.color.equals(Color.GREY)) {
+				System.out.println("Cycle detected...");
+			}
+		}
+		u.color = Color.BLACK;
+	}
+	
+	
+	private void topologicalSortUtil(Vertex src) {
+		src.d_time = ++time;
+		src.color = Color.GREY;
+		for(Vertex v : adjList.get(src.vertex)) {
+			if(v.color.equals(Color.WHITE)) {
+				topologicalSortUtil(v);
+			}
+		}
+		src.f_time = ++time;
+		src.color = Color.BLACK;
+	}
+	
+	//time- O(V^2) as i am using selection sort or (V+E), space- O(V)
+	public void topologicalSort(Vertex src, List<Vertex>vertices) {
+		time=0;
+		topologicalSortUtil(src);
+		for(int i = 0; i < vertices.size() - 1; i++) {
+			for(int j = i + 1; j < vertices.size(); j++) {
+				if(vertices.get(j).f_time > vertices.get(i).f_time) {
+					Vertex temp = vertices.get(i);
+					vertices.set(i, vertices.get(j));
+					vertices.set(j, temp);
+				}
+			}
+		}
+		System.out.println("Topological sort of vertices are");
+		for(Vertex v : vertices) {
+			System.out.print(v.vertex + " ");
+		}
+	}
+	
+	
 }

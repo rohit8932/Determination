@@ -85,4 +85,46 @@ public class DP {
 		return arr[n];
 	}
 	
+	//time- O(coins^n) space- O(n) where n is sum
+	public int minNumCoinsRequired(int[] coins, int sum) {
+		if(sum == 0) {
+			return 0;
+		}
+		int min = Integer.MAX_VALUE - 1;
+		for(int coin : coins) {
+			if(coin <= sum) {
+				min = Math.min(min, minNumCoinsRequired(coins, sum - coin));
+			}
+		}
+		return min + 1;
+	}
+	
+	public int knapsackProblemRepeatSelection(int[] weights, int[] values, int w) {
+		if(w <= 0) {
+			return 0;
+		}
+		int maxValue = Integer.MIN_VALUE;
+		for(int i = 0; i < weights.length; i++) {
+			if(i == 0)
+				continue;
+			if(weights[i] <= w) {
+				maxValue = Math.max(maxValue,knapsackProblemRepeatSelection(weights, values, w - weights[i]) + values[i]);
+			}
+		}
+		return maxValue;
+	}
+	
+	public int knapsackProblemNoRepeat(int[] weights, int[] values, int w, int index) {
+		if(w <= 0) {
+			return 0;
+		}
+
+		int maxValue = Integer.MIN_VALUE;
+		
+		for(int i = index; i < weights.length; i++) {
+			if(weights[i] <= w)
+				maxValue = Math.max(maxValue,knapsackProblemNoRepeat(weights, values, w - weights[i], i + 1) + values[i]);
+		}
+		return maxValue;
+	}
 }
