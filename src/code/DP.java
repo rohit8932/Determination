@@ -1,5 +1,8 @@
 package code;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class DP {
 	int[] knownResult = new int[100];
 	DP() {
@@ -99,6 +102,7 @@ public class DP {
 		return min + 1;
 	}
 	
+	//time- space-
 	public int knapsackProblemRepeatSelection(int[] weights, int[] values, int w) {
 		if(w <= 0) {
 			return 0;
@@ -114,6 +118,7 @@ public class DP {
 		return maxValue;
 	}
 	
+	//time- space-
 	public int knapsackProblemNoRepeat(int[] weights, int[] values, int w, int index) {
 		if(w <= 0) {
 			return 0;
@@ -126,5 +131,131 @@ public class DP {
 				maxValue = Math.max(maxValue,knapsackProblemNoRepeat(weights, values, w - weights[i], i + 1) + values[i]);
 		}
 		return maxValue;
+	}
+	
+	//time- O(nums^2) space- O(n)
+	public int targetSumBruteForce(int[] nums, int T, int i, int sum) {
+		if(i == nums.length) {
+			if(sum == T)
+				return 1;
+			else
+				return 0;
+		}
+		
+		return (targetSumBruteForce(nums, T, i + 1, sum + nums[i]) + targetSumBruteForce(nums, T, i + 1, sum - nums[i]));
+	
+	}
+	
+	
+	public int targetSumDP(int[] nums, int T, int i, int sum, Map<Integer, Map<Integer, Integer>> cache) {
+		if(i == nums.length) {
+			return sum == T? 1 : 0;
+		}
+		if(!cache.containsKey(i)) {
+			cache.put(i, new HashMap<Integer, Integer>());
+		}
+		
+		Integer cached = cache.get(i).get(sum);
+		if(cached != null) return cached;
+		
+		int toReturn = targetSumDP(nums, T, i + 1, sum + nums[i], cache) 
+				+ targetSumDP(nums, T, i + 1, sum - nums[i], cache);
+		
+		cache.get(i).put(sum, toReturn);
+		
+		return toReturn;
+	}
+
+	//time- O(weights^2) space- O(weights)
+	public int knapsackBruteForce(int[] weights, int[] values, int w, int i) {
+		if(i >= weights.length || w <= 0) {
+			return 0;
+		}
+		return Math.max(knapsackBruteForce(weights, values, w - weights[i], i + 1) + values[i], knapsackBruteForce(weights, values, w, i + 1));
+	}
+	
+	public int knapsackDP(int[] weights, int[] values, int w, int i, Map<Integer, Map<Integer, Integer>> cache) {
+		if(i >= weights.length || w <= 0) {
+			return 0;
+		}
+		if(!cache.containsKey(w)) {
+			cache.put(w, new HashMap<Integer, Integer>());
+		}
+		Integer cached = cache.get(w).get(i);
+		if(cached != null) return cached;
+		
+		int toReturn = Math.max(knapsackDP(weights, values, w - weights[i], i + 1, cache) + values[i], knapsackDP(weights, values, w, i + 1, cache));
+		cache.get(w).put(i, toReturn);
+		return toReturn;
+	}
+	
+	//time- O(n^2) space- O(n)
+	public int rodCuttingBruteForce(int[] profit, int n) {
+		if(n == 0) {
+			return 0;
+		}
+		int max = -99;
+		for(int i = 1; i <= n; i++) {
+			max = Math.max(max, profit[i] + rodCuttingBruteForce(profit, n-i));
+		}
+		return max;
+	}
+	
+	//time- O(2^max(n,m)) space- O(max(n,m)) where n and m are length of two strings
+	public int lcs(String str1, String str2, int i, int j) {
+		if(i < 0 || j < 0) {
+			return 0;
+		}
+		if(str1.charAt(i) == str2.charAt(j)) {
+			return lcs(str1, str2, i - 1, j -1 ) + 1;
+		}else {
+			return Math.max(lcs(str1, str2, i, j - 1), lcs(str1, str2, i - 1, j));
+		}
+		
+	}
+	
+	//time- O(2^n) space-O(n)
+	public int lis(int[] arr, int i, int prev) {
+		if(i == arr.length) {
+			return 0;
+		}
+		if(arr[i] > prev)
+			return Math.max(lis(arr, i + 1, arr[i]) + 1,  lis(arr, i + 1, prev));
+		else
+			return lis(arr, i + 1, prev);
+	}
+	
+	//time- O() space- O()
+	public int lis_dp(int[] arr, int i, int prev) {
+		if(i == arr.length) {
+			return 0;
+		}
+		if(knownResult[i] != -1)
+			return knownResult[i];
+		
+		if(arr[i] > prev) {
+			knownResult[i] = Math.max(lis_dp(arr,i + 1, arr[i]) + 1, lis_dp(arr, i + 1, prev) );
+			return knownResult[i];
+		}else {
+			return lis_dp(arr, i + 1, prev);
+		}	
+	}
+	
+	//time- O() space-O()
+	public int editDistance(String str1, String str2, int i, int j) {
+		if(i == 0) {
+			return j;
+		}
+		if(j == 0) {
+			return i;
+		}
+		
+		if(str1.charAt(i) == str2.charAt(j)) {
+			return editDistance(str1, str2, i - 1, j - 1);
+		}
+		else {
+			return Math.min(editDistance(str1, str2, i, j - 1) + 1, 
+					Math.min(editDistance(str1, str2, i - 1, j) + 1,editDistance(str1, str2, i - 1, j - 1) + 1));
+		}
 	}
 }
