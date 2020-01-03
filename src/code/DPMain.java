@@ -1,7 +1,7 @@
 package code;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Arrays;
+import java.util.List;
 
 public class DPMain {
 	public static void main(String[] args) {
@@ -31,9 +31,27 @@ public class DPMain {
 //		System.out.println(dp.lis(arr, 0, Integer.MIN_VALUE));
 //		System.out.println(dp.lis_dp(arr, 0, Integer.MIN_VALUE));
 		
-		System.out.println(dp.editDistance("sunday", "saturday", 5, 7));
+//		System.out.println(dp.editDistance("sunday", "saturday", 5, 7));
+//		List<String> dict = Arrays.asList("this", "th", "is", "famous", "Word", 
+//				"break", "b", "r", "e", "a", "k", "br", 
+//				"bre", "brea", "ak");
+//		String str = "Wordbreakproblem";
+//		
+//		dp.wordBreak(dict, str, "");
 		
+//		int[][] mat = new int[][] {{0, 0, 0},
+//								   {0, 1, 0},
+//								   {0, 0, 0}};
+//		dp.robotInGrid(mat, 0, 0, 2, 2);
+//		System.out.println(dp.count);
+		
+//		int[] arr = new int[] {-2, 0, 1, 3, 5};
+//		dp.magicNumber(arr, 0, arr.length);
+		
+		dp.generatePowerSet(new int[] {1, 2, 3, 4}, 0, new int[10], 0);
 	}
+		
+		
 	
 
 }

@@ -1,10 +1,12 @@
 package code;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class DP {
 	int[] knownResult = new int[100];
+	int count = 0;
 	DP() {
 		for(int i = 0; i < 100; i++) {
 			knownResult[i] = -1;		
@@ -258,4 +260,74 @@ public class DP {
 					Math.min(editDistance(str1, str2, i - 1, j) + 1,editDistance(str1, str2, i - 1, j - 1) + 1));
 		}
 	}
+
+	
+	//time- O() spce- O()
+	public void wordBreak(List<String> dict, String str, String out) {		
+		if(str.length() == 0) {
+			System.out.println(out);
+		}
+		
+		for(int i = 0; i <= str.length(); i++) {
+			String preFix = str.substring(0, i);
+			if(dict.contains(preFix)) {
+				wordBreak(dict, str.substring(i), out + " " + preFix);
+			}
+		}
+			
+	}
+	
+	public void  robotInGrid(int[][] mat, int i, int j, int x, int y) {
+		if(i == x && j == y) {
+			System.out.println("Reached destination");
+			 count = count + 1 ;
+			return;
+		}
+		
+		if(isSafe(mat, i + 1, j)) {
+			robotInGrid(mat, i + 1, j, x, y);
+		}
+		if(isSafe(mat, i, j + 1)) {
+			robotInGrid(mat, i, j + 1, x, y);			
+		}
+	}
+	private boolean isSafe(int[][] mat, int x, int y) {
+		if(x < mat.length && y < mat[0].length && mat[x][y] != 1) {
+			return true;
+		}
+		return false;
+	}
+	
+	//time- O(log n) space- O()
+	public void magicNumber(int[] arr, int start, int end) {
+		if(start < 0 || end > arr.length) {
+			return;
+		}
+		int mid = (start + end) / 2;
+		if(arr[mid] == mid) {
+			System.out.println("Magic number found " + mid );
+		}else if(mid < arr[mid] ) {
+			magicNumber(arr, start, mid - 1);
+		}else {
+			magicNumber(arr, mid + 1, end);
+		}
+	}
+	
+	//time- O(2^n) space- O(n)
+	public void generatePowerSet(int[] arr, int i, int[] temp, int k) {
+		if(i >= arr.length) {
+			for(int j = 0; j < k; j ++) {
+				System.out.print(temp[j] + " ");
+			}
+			System.out.println();
+			return;
+		}
+		
+		
+		temp[k] = arr[i];
+		generatePowerSet(arr, i + 1, temp, k + 1);
+		generatePowerSet(arr, i + 1, temp, k); 
+	}
+	
+	
 }
