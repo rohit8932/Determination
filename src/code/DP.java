@@ -1,8 +1,10 @@
 package code;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class DP {
 	int[] knownResult = new int[100];
@@ -260,7 +262,6 @@ public class DP {
 					Math.min(editDistance(str1, str2, i - 1, j) + 1,editDistance(str1, str2, i - 1, j - 1) + 1));
 		}
 	}
-
 	
 	//time- O() spce- O()
 	public void wordBreak(List<String> dict, String str, String out) {		
@@ -321,13 +322,199 @@ public class DP {
 			}
 			System.out.println();
 			return;
-		}
-		
-		
+		}				
 		temp[k] = arr[i];
 		generatePowerSet(arr, i + 1, temp, k + 1);
 		generatePowerSet(arr, i + 1, temp, k); 
 	}
 	
+	//time- O(n!) space- O(number of character)
+	public Set<String> permute(char[] str, int i, Set<String> result) {
+		if(i == str.length - 1) {
+			System.out.println(str);
+			result.add(new String(str)); //adding in set so that when have duplicate character, we wil not have duplicate permutation
+			return result;
+		}
+		
+		for(int j = i; j < str.length; j++) {
+			swap(str, j , i);
+			permute(str, i + 1, result);
+			swap(str, j , i);
+		}
+		return result;
+	}
 	
+	private void swap(char[] str, int i, int j) {
+		char temp = str[i];
+		str[i] = str[j];
+		str[j] = temp;	
+	}
+	
+	//time- O(m*n) space- O(m or n)
+	public void paintFill(int[][] mat, int row, int col, int oldColor, int newColor) {
+		int[] x = new int[] {-1, -1, 0, 1, 1, 1, 0, -1};
+		int[] y = new int[] {0, 1, 1, 1, 0, -1, -1, -1};
+		
+		if(!valid(mat, row, col, oldColor)) {
+			return;
+		}
+		
+		mat[row][col] = newColor;
+		for(int i = 0; i < 8; i++) {
+			paintFill(mat, row + x[i], col + y[i], oldColor, newColor);
+		}
+	}
+	private boolean valid(int[][] mat, int r, int c, int oldColor) {
+		if(r < 0 || c < 0 || r >= mat.length || c >= mat[0].length || mat[r][c] != oldColor) {
+			return false;
+		}
+		return true;
+	}
+	
+	public int numWaysToMakeChange(int[] coins, int sum) {
+		if(sum == 0) {
+			count ++;
+			return count;
+		}
+		
+		for(int i = 0; i < coins.length; i++) {
+			if(sum - coins[i] >= 0) {
+				numWaysToMakeChange(coins, sum - coins[i]);
+			}
+		}
+		return count;
+	}
+	
+	//time- O(numOfCoins^sum) space- O(sum)
+	public int minCoinsRequiredToMakeSum(int[] coins, int sum) {
+		if(sum == 0) {
+			return 0; 
+		}
+		
+		int min = Integer.MAX_VALUE, localmin = Integer.MAX_VALUE;
+		for(int i = 0; i < coins.length; i++) {
+			if(coins[i] <= sum) {
+				localmin = minCoinsRequiredToMakeSum(coins, sum - coins[i]) + 1;
+			}
+			min = Math.min(min, localmin);
+		}
+		return min;
+	}
+	
+	public boolean nQueenProblem(int[][] mat, int row) {
+		if(row == mat.length) {
+			for(int i = 0; i < mat.length; i++) {
+				for(int j = 0; j < mat[0].length; j++) {
+					System.out.print(mat[i][j] + " ");
+				}
+				System.out.println();
+			}
+			return true;
+		}
+		
+		for(int i = 0; i < mat.length; i++) {
+			if(safe(mat, row, i)) {
+				mat[row][i] = 1;
+				if(nQueenProblem(mat, row + 1)) {
+					return true;
+				}
+				mat[row][i] = 0;
+			}
+		}
+		return false;
+	}
+	
+	private boolean safe(int[][] mat, int r, int c) {
+		boolean safe = true;
+		//check in column
+		for(int i = 0; i < r; i++) {
+			if(mat[i][c] == 1) {
+				safe = false;
+			}
+		}
+		
+		//left diagonal
+		for(int i = r - 1, j = c - 1; i >= 0 && j >= 0; i --, j --) {
+			if(mat[i][j] == 1) {
+				safe = false;
+			}
+		}
+		
+		//right diagonal
+		for(int i = r - 1, j = c + 1; i >= 0 && j < mat[0].length; i --, j++) {
+			if(mat[i][j] == 1) {
+				safe = false;
+			}
+		}
+		return safe;
+	}
+	
+	//time- O() space-O(n)
+	public void parens(char[] str, int n, int pos, int leftBracket, int rightBracket) {
+		if(rightBracket == n) {
+			System.out.println(str);
+			return;
+		}
+		
+		if(leftBracket > rightBracket) {
+			str[pos] = '}';
+			parens(str, n, pos + 1, leftBracket, rightBracket + 1);
+		}
+		if(leftBracket < n) {
+			str[pos] = '{';
+			parens(str, n, pos + 1, leftBracket + 1, rightBracket);
+		}
+	}
+	
+	
+	//time- O() space- O()
+	public int stackOfBoxes(int[] l, int[] b, int[] h) {
+		int[] area = new int[l.length];
+		for(int i = 0; i < l.length; i ++ ) {
+			int minArea = Integer.MAX_VALUE;
+						
+			minArea = Math.min(minArea, l[i] * b[i]);
+			minArea = Math.min(minArea, b[i] * h[i]);
+			minArea = Math.min(minArea, l[i] * h[i]);
+			
+			area[i] = minArea;
+		}
+		for(int i = 0; i < area.length/2; i++) {
+			int temp = area[i];
+			area[i] = area[area.length - i - 1];
+			area[area.length - i- 1] = temp;
+		}
+		
+		for(int i : area)
+			System.out.print(i +  " ");
+		System.out.println();
+		
+		return LDS(area, 0, Integer.MAX_VALUE);
+		
+	}
+	private int LDS(int[] arr, int i, int prev) {
+		if(i == arr.length) {
+			return 0;
+		}
+		
+		if(arr[i] <= prev) {
+			return Math.max(LDS(arr, i + 1, arr[i]) + 1, LDS(arr, i + 1, prev));
+		}
+		return LDS(arr, i + 1, prev);
+	}
+	
+	//time- O(2^n) space- O(n)
+	public int tripleSteps(int n) {
+
+		if(n < 0) {
+			return 0;
+		}
+		if(n == 0) {
+			return 1;
+		}
+		
+		return tripleSteps(n - 1) + tripleSteps(n - 2) + tripleSteps(n - 3); 
+		
+		
+	}
 }

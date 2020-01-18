@@ -1,7 +1,8 @@
 package code;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
 
 public class DPMain {
 	public static void main(String[] args) {
@@ -48,7 +49,47 @@ public class DPMain {
 //		int[] arr = new int[] {-2, 0, 1, 3, 5};
 //		dp.magicNumber(arr, 0, arr.length);
 		
-		dp.generatePowerSet(new int[] {1, 2, 3, 4}, 0, new int[10], 0);
+//		dp.generatePowerSet(new int[] {1, 2, 3, 4}, 0, new int[10], 0);
+		
+//		Set<String> result = new HashSet<>();
+//		dp.permute(new char[] {'A', 'B', 'C', 'D', 'E'}, 0, result);
+//		System.out.println();
+//		System.out.println(result.size());
+//		for(String str: result) {
+//			System.out.println(str);
+//		}
+		
+//		int [][]mat = new int[][] {{0, 1, 0, 1},
+//								   {1, 0, 1, 1},
+//								   {1, 1, 1, 1},
+//								   {1, 0, 1, 1}};
+//		dp.paintFill(mat, 0, 0, 0, 2);
+//		
+//		for(int i = 0; i < mat.length; i++) {
+//			for(int j = 0; j < mat[0].length; j++) {
+//				System.out.print(mat[i][j] + " ");
+//			}
+//			System.out.println();
+//		}
+//		int[] coins = new int[] {1, 3, 5, 7};
+//		System.out.println(dp.numWaysToMakeChange(coins, 8));
+//		System.out.println(dp.count);
+//		
+//		System.out.println(dp.minCoinsRequiredToMakeSum(coins, 8));
+		
+//		int[][] board = { { 0, 0, 0, 0 }, 
+//                { 0, 0, 0, 0 }, 
+//                { 0, 0, 0, 0 }, 
+//                { 0, 0, 0, 0 } }; 
+//		dp.nQueenProblem(board, 0);
+		
+//		int n = 3;
+//		dp.parens(new char[n * 2], n, 0, 0, 0);
+		
+//		System.out.println(dp.stackOfBoxes(new int[] {1, 4, 2}, new int[] {3, 1, 6}, new int[] {1, 8, 2}));
+		System.out.println(dp.tripleSteps(10));
+		
+		
 	}
 		
 		
