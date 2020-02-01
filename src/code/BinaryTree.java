@@ -262,4 +262,17 @@ public class BinaryTree {
 		return numLeafNode;
 	}
 	
+	//time- O(n) space- O(log n)
+	public Node minimalTree(int[] arr, int left, int right, Node root) {
+		if(left > right) {
+			return null;
+		}
+		int mid = (left + right) / 2;
+		
+		root = new Node(arr[mid]);
+		root.left = minimalTree(arr, left, mid - 1, root);
+		root.right = minimalTree(arr, mid + 1, right, root);
+		return root;
+		
+	}
 }

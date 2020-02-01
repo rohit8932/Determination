@@ -317,10 +317,12 @@ public class Graph2 {
 		int[] distance = new int[mat.length];
 		Arrays.fill(distance, 9998932);
 		distance[src] = 0;
-		for(int i = 0; i < mat.length - 1; i++) {
-			for(int j = 0; j < mat[0].length; j++) {
-				if(mat[i][j] != 0 && distance[i] + mat[i][j] < distance[j]) {
-					distance[j] = distance[i] + mat[i][j];
+		for (int k = 0; k < mat.length; k++) { //llop for |V| -1 because we will want to relax shortest |V|-1 edge
+			for (int i = 0; i < mat.length - 1; i++) {
+				for (int j = 0; j < mat[0].length; j++) {
+					if (mat[i][j] != 0 && distance[i] + mat[i][j] < distance[j]) {
+						distance[j] = distance[i] + mat[i][j];
+					}
 				}
 			}
 		}
@@ -427,7 +429,7 @@ public class Graph2 {
            
            Graph2 singleSrcShortPath = new Graph2();
            singleSrcShortPath.findShortestPathInDirectedGraph(mat, 0);
-           //singleSrcShortPath.findShortestPathInDirectedGraph2(mat, 0);
+           singleSrcShortPath.findShortestPathInDirectedGraph2(mat, 0);
 		
 	}
 }

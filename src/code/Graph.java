@@ -1,8 +1,12 @@
 package code;
 
+import java.beans.Visibility;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Queue;
 import java.util.Stack;
 
@@ -130,6 +134,69 @@ public class Graph {
 			
 		}
 		System.out.println("Path "+ foundDestn);
-		
 	}
+	
+	public void minNumThrowReqToWinSnakeLadder(Map<Integer, Integer> ladder, Map<Integer, Integer> snake) {
+		int N = 101;
+		Graph g = new Graph(makeGraph(ladder, snake), N);
+		
+		//normal BFS
+		boolean[] visited = new boolean[N + 1];
+		int[] cost = new int[N + 1];
+		Arrays.fill(cost,  -1);
+		Queue<Integer> q = new LinkedList<Integer>();
+		q.add(1);
+		visited[1] = true;
+		cost[1] = 0;
+		while(!q.isEmpty()) {
+			int temp = q.remove();
+			for(int edge : g.adjList.get(temp)) {
+				if(visited[edge] == false) {
+					q.add(edge);
+					visited[edge] = true;
+					cost[edge] = cost[temp] + 1;
+				}
+			}
+		}
+		System.out.println("min cost to reach 100 is "+cost[100]);
+	}
+	private List<Edge> makeGraph(Map<Integer, Integer> ladder, Map<Integer, Integer> snake) {
+		int N = 100;
+		int src, destn;
+		List<Edge> edges = new ArrayList<Graph.Edge>();
+		for(int i = 1; i <= N; i ++) {
+			for(int j = 1; j < 6 && i + j <=100; j ++) {
+				src = i;
+				int _ladder = ladder.get(i+j) != null? ladder.get(i+j):0;
+				int _snake = snake.get(i+j) != null? snake.get(i+j):0;
+				
+				if(_ladder != 0 || _snake != 0) { //both condition not possible
+					destn = _ladder + _snake;
+				}else {
+					destn = i + j;
+				}
+				edges.add(new Edge(src, destn));
+			}
+		}
+		return edges;
+	}
+	
+	public void routeBtwNodes(Graph g, int src, int destn, boolean[] visited) {
+		if(src == destn) {
+			System.out.println(destn + " is reach able from source");
+			return;
+		}
+		if(visited[src] == true) {
+			return;
+		}
+		for(int i : g.adjList.get(src)) {
+			if(visited[i] == false) {
+				routeBtwNodes(g, i, destn, visited);
+				visited[i] = true;
+			}
+		}
+	}
+	
+	
+	
 }

@@ -1,16 +1,18 @@
 package code;
 
+import code.BinaryTree.Node;
+
 public class BinaryTreeMain {
 	public static void main(String[] args) {
 		BinaryTree BT = new BinaryTree();
-		BT.createBinaryTree(10);
-		BT.createBinaryTree(11);
-		BT.createBinaryTree(12);
-		BT.createBinaryTree(13);
-		BT.createBinaryTree(14);
-		BT.createBinaryTree(15);
-		BT.createBinaryTree(16);
-		BT.createBinaryTree(17);
+//		BT.createBinaryTree(10);
+//		BT.createBinaryTree(11);
+//		BT.createBinaryTree(12);
+//		BT.createBinaryTree(13);
+//		BT.createBinaryTree(14);
+//		BT.createBinaryTree(15);
+//		BT.createBinaryTree(16);
+//		BT.createBinaryTree(17);
 		
 //		System.out.println("Recursive PreOrder");
 //		BT.recursivePreOrder(BT.root);
@@ -34,9 +36,14 @@ public class BinaryTreeMain {
 //		BT.deleteTree(BT.root);
 //		System.out.println(BT.root.data);
 		
-		System.out.println(BT.heightOfTree(BT.root) -1);
-		System.out.println(BT.heightOfTreeNonRecursive(BT.root));
-		System.out.println(BT.numLeafNode(BT.root));
+//		System.out.println(BT.heightOfTree(BT.root) -1);
+//		System.out.println(BT.heightOfTreeNonRecursive(BT.root));
+//		System.out.println(BT.numLeafNode(BT.root));
+		
+		int[] arr = new int[] {10, 11, 12, 13, 14,};
+		Node root = BT.minimalTree(arr, 0, arr.length - 1, null);
+		BT.levelorder(root);
+		
 	}
 
 }
