@@ -60,4 +60,50 @@ public class BST {
 		return null;
 	}
 	
+	public boolean checkBST(Node root, int min, int max) {
+		if(root == null) return true;
+		
+		if(root.data < min || root.data > max) return false;
+			
+		return checkBST(root.left, min, root.data) && checkBST(root.right, root.data, max);
+		
+		
+	}
+
+//	public Node inorderSuccessor(Node root) {
+//
+//		if(root.right == null) {
+//			Node temp = root.parent;
+//			while(temp != null && temp.left == root) {
+//				temp = temp.parent;
+//			}
+//		}
+//		if(root.right.left == null) return root.right;
+//		
+//		root = root.right;
+//		while(root.left != null) {
+//			root = root.left;
+//		}
+//		return root;
+//			
+//	}
+	
+	// time- O(n) space- O(n)
+	public Node commonAnchestor(Node root, int data1, int data2) {
+		if(root == null) return null;
+		if(root.data == data1 || root.data == data2) return root;
+		
+		Node left = commonAnchestor(root.left, data1, data2);
+		Node right = commonAnchestor(root.right, data1, data2);
+		
+		if(left != null && right != null) {
+			System.out.println("Common Anchestor found " + root.data);
+			return root;
+		}else if(left != null) {
+			return left;
+		}else
+			return right;
+		
+	}
+	
 }

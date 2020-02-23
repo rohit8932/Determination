@@ -35,7 +35,7 @@ public class Graph2 {
 		}
 		for(Edge e : edges) {
 			adjList.get(e.src).add(e.destn);
-//			adjList.get(e.destn).add(e.src); //just to make undirected graph
+			adjList.get(e.destn).add(e.src); //just to make undirected graph
 		}
 	}
 	public Graph2() {
@@ -202,7 +202,7 @@ public class Graph2 {
 					visited[vertex] = true;
 					parent[vertex] = temp;
 				}else {
-					if(parent[temp] != vertex) {
+					if(parent[temp] != vertex) {//if vertex is not parent then its a cycle.
 						System.out.println("Cycle found");
 						return;
 					}
@@ -332,8 +332,8 @@ public class Graph2 {
 	}
 	
 	public static void main(String[] args) {
-		Graph2 graph = new Graph2(Arrays.asList(new Edge(0, 1), new Edge(1, 2), new Edge(1, 4), new Edge(2, 3),
-				new Edge(4, 5), new Edge(6, 2)), 7);
+//		Graph2 graph = new Graph2(Arrays.asList(new Edge(0, 1), new Edge(1, 2), new Edge(1, 4), new Edge(2, 3),
+//				new Edge(4, 5), new Edge(6, 2)), 7);
 //		graph.dfs(graph, 0);
 //		System.out.println();
 //		graph.dfs_recursive(graph, 0, new boolean[graph.adjList.size()]);
@@ -397,10 +397,10 @@ public class Graph2 {
 //		}
 //		System.out.println("Connected Island " + connectedIslandCount);
 		
-//		Graph2 unDirGraph = new Graph2(Arrays.asList(new Edge(0, 1), new Edge(1, 2), new Edge(2, 3), 
-//				 new Edge(2, 0)), 4);
-//		System.out.println(unDirGraph.detectCycleInDirectedGraph(unDirGraph, 0));
-		
+		Graph2 unDirGraph = new Graph2(Arrays.asList(new Edge(0, 1), new Edge(1, 2), new Edge(2, 3), 
+				 new Edge(2, 0)), 4);
+		//System.out.println(unDirGraph.detectCycleInDirectedGraph(unDirGraph, 0));
+		unDirGraph.detectCycleInUndirectedGraph(unDirGraph, 0);
 //		Graph2 dirGraph = new Graph2(Arrays.asList(new Edge(0, 1), new Edge(1, 2), new Edge(0, 2)), 3);
 //		System.out.println(dirGraph.detectCycleInDirectedGraph(dirGraph, 0));
 		
@@ -416,20 +416,20 @@ public class Graph2 {
 //		Graph2 mazeP = new Graph2();
 //		mazeP.binaryMaze_shortestDis(maze, new Cell(0, 0), new Cell(5, 3));
 		
-		int mat[][] = new int[][]	{{0, 4, 0, 0, 0, 0, 0, 8, 0}, 
-						            {4, 0, 8, 0, 0, 0, 0, 11, 0}, 
-						            {0, 8, 0, 7, 0, 4, 0, 0, 2}, 
-						            {0, 0, 7, 0, 9, 14, 0, 0, 0}, 
-						            {0, 0, 0, 9, 0, 10, 0, 0, 0},  
-						            {0, 0, 4, 14, 10, 0, 2, 0, 0}, 
-						            {0, 0, 0, 0, 0, 2, 0, 1, 6}, 
-						            {8, 11, 0, 0, 0, 0, 1, 0, 7}, 
-						            {0, 0, 2, 0, 0, 0, 6, 7, 0}}; 
-						           
-           
-           Graph2 singleSrcShortPath = new Graph2();
-           singleSrcShortPath.findShortestPathInDirectedGraph(mat, 0);
-           singleSrcShortPath.findShortestPathInDirectedGraph2(mat, 0);
+//		int mat[][] = new int[][]	{{0, 4, 0, 0, 0, 0, 0, 8, 0}, 
+//						            {4, 0, 8, 0, 0, 0, 0, 11, 0}, 
+//						            {0, 8, 0, 7, 0, 4, 0, 0, 2}, 
+//						            {0, 0, 7, 0, 9, 14, 0, 0, 0}, 
+//						            {0, 0, 0, 9, 0, 10, 0, 0, 0},  
+//						            {0, 0, 4, 14, 10, 0, 2, 0, 0}, 
+//						            {0, 0, 0, 0, 0, 2, 0, 1, 6}, 
+//						            {8, 11, 0, 0, 0, 0, 1, 0, 7}, 
+//						            {0, 0, 2, 0, 0, 0, 6, 7, 0}}; 
+//						           
+//           
+//           Graph2 singleSrcShortPath = new Graph2();
+//           singleSrcShortPath.findShortestPathInDirectedGraph(mat, 0);
+//           singleSrcShortPath.findShortestPathInDirectedGraph2(mat, 0);
 		
 	}
 }

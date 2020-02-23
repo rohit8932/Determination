@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Queue;
 import java.util.Stack;
 
+import javax.sql.CommonDataSource;
+
 public class BinaryTree {
 	Node root;
 	int numLeafNode = 0;
@@ -14,7 +16,7 @@ public class BinaryTree {
 		root = null;
 	}
 	
-	class Node{
+	static class Node{
 		int data;
 		Node left;
 		Node right;
@@ -275,4 +277,145 @@ public class BinaryTree {
 		return root;
 		
 	}
+	
+	//time- O(n) space- O()
+	public void listOfDepth(Node root) { //consiering unique node in tree
+		Queue<Node> q = new LinkedList<>();
+		List<code.LinkedList> ll = new ArrayList<>();
+		q.add(root);
+		q.add(null);
+		int newLL = 0;
+		code.LinkedList tempL = new code.LinkedList();
+		ll.add(newLL, tempL);
+		while(!q.isEmpty()) {
+			Node temp = q.remove();
+			if(temp == null) {
+				if(!q.isEmpty()) {
+					q.add(null);
+					tempL = new code.LinkedList();
+					ll.add(++newLL, tempL);
+				}
+				continue;
+			}else {
+				tempL.insertInSinglyLL(temp.data);
+			}
+			if(temp.left != null) {
+				q.add(temp.left);				
+			}
+			if(temp.right != null) {
+				q.add(temp.right);
+			}
+			
+		}
+		for(int i = 0; i < ll.size(); i++) {
+			code.LinkedList.Node trav = ll.get(i).head;
+			while(trav != null) {
+				System.out.print(trav.data +  " ");
+				trav = trav.next;
+			}
+			System.out.println();
+		}
+	}
+	
+	public boolean checkBalanced(Node root) {
+		if(root != null) {
+			int leftH = getHeight(root.left) -1;
+			int rightH = getHeight(root.right) -1;
+			if(leftH - rightH > 1 || leftH - rightH < -1) {
+				System.out.println("The tree is unbalaned");
+				return false;
+			}
+			return checkBalanced(root.left) && checkBalanced(root.right);
+		}
+		return true;
+	}
+	
+	private int getHeight(Node root) {
+
+		if(root == null) {
+			return 0;
+		}
+		int left = getHeight(root.left);
+		int right = getHeight(root.right);
+		
+		if(left > right) {
+			return left + 1;
+		}
+		return right + 1;
+	}
+	
+	//time- O(n) space- O(n)
+	public void sumOfPath(Node root, int sum, int[] arr, int index) {
+		if (root == null) {
+			return;
+		}
+		if(root.left == null && root.right == null) {
+			arr[index++] = root.data;
+			for(int i  = 0;i < index; i ++) {
+				System.out.print( arr[i] + " - > ");
+			}
+			System.out.println(" = " + (sum + root.data));
+			return;
+		}
+		arr[index++] = root.data;
+		sumOfPath(root.left, sum + root.data, arr, index);
+		sumOfPath(root.right, sum + root.data, arr, index);
+	}
+	
+	public int pathWithSum(Node root, int sum) {
+		if(root == null) return 0 ;
+		
+		int numOfSumOnLeft = sumOnPath(root, sum, 0);
+		int left = pathWithSum(root.left, sum);
+		int right = pathWithSum(root.right, sum);
+		return numOfSumOnLeft + left + right;
+	}
+	private int sumOnPath(Node root, int sum, int currSum) {
+		if(root == null) return 0;
+		int totalSum = 0;
+		
+		if(currSum == sum) {
+			totalSum ++;
+		}
+		totalSum+= sumOnPath(root.left, totalSum, currSum + root.data);
+		totalSum+= sumOnPath(root.right, totalSum, currSum + root.data);
+		return totalSum;
+	}
+
+	public Node commonAnchestor(Node root, int data1, int data2) {
+		if(root == null ) return null;
+		Node left = commonAnchestor(root.left, data1, data2);
+		Node right = commonAnchestor(root.right, data1, data2);
+		
+		if(left != null && right != null) {
+			System.out.println("Common Anchestor is " + root.data);
+		}
+		if(root.data == data1 || root.data == data2) return root;
+		
+		if(left != null) 
+			return left;
+		else 
+			return right;
+		
+	}
+	
+	//time- O(mn) space- O(height of tree)
+	public boolean isSubtree(Node root1, Node root2) {
+		if(root1 == null) return false;
+		
+		if(isIdentical(root1, root2))	return true;
+		
+		return (isSubtree(root1.left, root2) || isSubtree(root1.right, root2));
+	}
+	//time- O(n) space- O(height of tree2)
+	private boolean isIdentical(Node root1, Node root2) {
+		if(root1 == null && root2 == null) 	return true;
+		
+		if(root1 == null || root2 ==null)	return false;
+		
+		return (root1.data == root2.data && isIdentical(root1.left, root2.left)
+				&& isIdentical(root1.right, root2.right));
+		
+	}
+	
 }

@@ -55,10 +55,18 @@ public class GraphMain {
 //		snake.put(98, 79);
 //		graph.minNumThrowReqToWinSnakeLadder(ladder, snake);
 		
-		List<Graph.Edge> edges = Arrays.asList(new Graph.Edge(0, 1), new Graph.Edge(1, 2), new Graph.Edge(2, 3),
-				new Graph.Edge(4, 5));
-		Graph g = new Graph(edges,6);
-		g.routeBtwNodes(g, 0, 5, new boolean[6]);
+//		List<Graph.Edge> edges = Arrays.asList(new Graph.Edge(0, 1), new Graph.Edge(1, 2), new Graph.Edge(2, 3),
+//				new Graph.Edge(4, 5));
+//		Graph g = new Graph(edges,6);
+//		g.routeBtwNodes(g, 0, 5, new boolean[6]);
+		
+		List<Graph.Edge> edges = Arrays.asList(new Graph.Edge(5, 0), new Graph.Edge(4, 0), new Graph.Edge(5, 2),
+				new Graph.Edge(4, 1),new Graph.Edge(2, 3), new Graph.Edge(3, 1));
+//		List<Graph.Edge> edges = Arrays.asList(new Graph.Edge(0, 1), new Graph.Edge(1, 0));
+		Graph graph = new Graph(edges, 6);
+//		graph.getIndegreeOfNodes(graph);
+		graph.resolveDependency(graph);
+		
 		
 		}
 	}

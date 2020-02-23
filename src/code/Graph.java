@@ -1,9 +1,7 @@
 package code;
 
-import java.beans.Visibility;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -42,7 +40,7 @@ public class Graph {
 			adjList.get(e.src).add(e.destn);
 		}
 	}
-	//time- O(n) space- O(n) in space two case ie.for skewed (1)and for worst (n) when one root has all other node as child
+	//time- O(n) space- O(n)in space two case ie.for skewed (1)and for worst (n) when one root has all other node as child
 	public void bfsAdjList(int src) {
 		Queue<Integer> q = new LinkedList<>();
 		q.add(src);
@@ -197,6 +195,68 @@ public class Graph {
 		}
 	}
 	
+	//time- O(V + E) space- O()
+	public int[] getIndegreeOfNodes(Graph g) {
+		int[] indegree = new int[g.adjList.size()];
+		Queue<Integer> q = new LinkedList<>();
+		boolean[] visited = new boolean[g.adjList.size()];
+		Arrays.fill(visited, false);
+		for (int node = 0; node < g.adjList.size(); node++) {
+			q.add(node);
+			while (!q.isEmpty()) {
+				int temp = q.remove();
+				for (int e : g.adjList.get(temp)) {
+						q.add(e);
+						indegree[e]++;
+						visited[e] = true;
+				}
+			}
+		}
+//		for(int i = 0; i < indegree.length; i++) 
+//			System.out.println(i + " : " + indegree[i]);
+		return indegree;
+	}
+	public void removeEdgeFromGraph(Graph g, int vertex, int[] indegree) {
+		for(int e : g.adjList.get(vertex)){
+			indegree[e]--;
+		}
+		g.adjList.get(vertex).clear();
+	}
+	
+	//time- O(V+E) space- O()
+	public void resolveDependency(Graph g) {
+		int count=0;
+		int[] indegree = new int[g.adjList.size()];
+		Arrays.fill(indegree, 0);
+		List<Integer> order = new ArrayList<>();
+		Queue<Integer> q = new LinkedList<>();
+		for(int v = 0; v < adjList.size(); v ++) {
+			for(int e = 0; e < adjList.get(v).size(); e ++) {
+				indegree[adjList.get(v).get(e)]++;
+			}
+		}
+		for(int i = 0; i < g.adjList.size(); i ++) {
+			if(indegree[i] == 0) {
+				q.add(i);
+			}
+		}
+		while(!q.isEmpty()) {
+			int temp = q.remove();
+			for(int v : adjList.get(temp)) {
+				if(--indegree[v] == 0) {
+					q.add(v);
+				}
+			}
+			adjList.get(temp).clear();
+			order.add(temp);
+			count++;
+		}
+		if(count != adjList.size()) {
+			System.out.println("Graph contains cycle");
+		}
+		for(int o : order)
+			System.out.print(o + " ");
+	}
 	
 	
 }
