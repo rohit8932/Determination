@@ -279,7 +279,7 @@ public class BinaryTree {
 	}
 	
 	//time- O(n) space- O()
-	public void listOfDepth(Node root) { //consiering unique node in tree
+	public void listOfDepth(Node root) { //considering unique node in tree
 		Queue<Node> q = new LinkedList<>();
 		List<code.LinkedList> ll = new ArrayList<>();
 		q.add(root);
@@ -417,5 +417,21 @@ public class BinaryTree {
 				&& isIdentical(root1.right, root2.right));
 		
 	}
+	
+	public void invertTree(Node root1, Node root2) {
+		if(root1 != null) {
+			if(root1.left != null)
+				root2.right = new Node(root1.left.data);
+			else
+				root2.right = null;
+			invertTree(root1.left, root2.right);
+			if(root1.right != null) 
+				root2.left = new Node(root1.right.data);
+			else
+				root2.left = null;
+			invertTree(root1.right, root2.left);
+		}
+	}
+	
 	
 }

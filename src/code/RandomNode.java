@@ -47,7 +47,7 @@ public class RandomNode {
 			addChildren(root.left);
 			root.children = numChildren(root) - 1;
 			addChildren(root.right);
-		}
+		  }
 	}
 	private int numChildren(Node root) {
 		if(root == null) return 0;
