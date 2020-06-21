@@ -174,13 +174,14 @@ public class Graph2 {
 				if(isValidCell_forIsland(mat, xRow, yCol, visited)){
 					q.add(new Cell(xRow, yCol));
 					visited[xRow][yCol] = 1;
+					mat[xRow][yCol] = 0;
 				}
 			}
 		}
 		
 	}
 	private boolean isValidCell_forIsland(int[][]mat, int x, int y, int[][] visited) {
-		if(x < 0 || y < 0 || x >= visited.length || y >= visited.length || visited[x][y] == 1 || mat[x][y] == 0 ) {
+		if(x < 0 || y < 0 || x >= mat.length || y >= mat.length  || mat[x][y] == 0 ) {
 			return false;
 		}
 		return true;
@@ -332,8 +333,8 @@ public class Graph2 {
 	}
 	
 	public static void main(String[] args) {
-//		Graph2 graph = new Graph2(Arrays.asList(new Edge(0, 1), new Edge(1, 2), new Edge(1, 4), new Edge(2, 3),
-//				new Edge(4, 5), new Edge(6, 2)), 7);
+		Graph2 graph = new Graph2(Arrays.asList(new Edge(0, 1), new Edge(1, 2), new Edge(1, 4), new Edge(2, 3),
+				new Edge(4, 5), new Edge(6, 2)), 7);
 //		graph.dfs(graph, 0);
 //		System.out.println();
 //		graph.dfs_recursive(graph, 0, new boolean[graph.adjList.size()]);
@@ -369,38 +370,38 @@ public class Graph2 {
 //							 {0, 0, 0, 0, 0, 0, 0, 0}};
 //		graph.floodFill(colorPixel, new Cell(3, 7), visitedPixel);
 		
-//		int[][] island= {{0, 0, 0, 0, 0, 0, 0, 0},
-//				 {0, 0, 0, 1, 1, 1, 1, 0},
-//				 {0, 0, 0, 0, 1, 1, 1, 0},
-//				 {0, 1, 0, 0, 1, 1, 1, 1},
-//				 {0, 0, 0, 0, 0, 1, 1, 1},
-//				 {1, 0, 1, 0, 0, 0, 1, 1},
-//				 {0, 1, 0, 0, 0, 0, 0, 1},
-//				 {0, 0, 0, 0, 0, 0, 0, 0}};
-//		
-//		int[][] visitedIsland={{0, 0, 0, 0, 0, 0, 0, 0},
-//				 {0, 0, 0, 0, 0, 0, 0, 0},
-//				 {0, 0, 0, 0, 0, 0, 0, 0},
-//				 {0, 0, 0, 0, 0, 0, 0, 0},
-//				 {0, 0, 0, 0, 0, 0, 0, 0},
-//				 {0, 0, 0, 0, 0, 0, 0, 0},
-//				 {0, 0, 0, 0, 0, 0, 0, 0},
-//				 {0, 0, 0, 0, 0, 0, 0, 0}};
-//		int connectedIslandCount = 0;
-//		for(int i = 0; i < island.length; i ++) {
-//			for(int j = 0; j < island[0].length; j ++) {
-//				if(island[i][j] != 0 && visitedIsland[i][j] != 1) {
-//					connectedIslandCount ++;
-//					graph.findIsland(island, new Cell(i, j), visitedIsland);
-//				}
-//			}
-//		}
-//		System.out.println("Connected Island " + connectedIslandCount);
+		int[][] island= {{0, 0, 0, 0, 0, 0, 0, 0},
+				 {0, 0, 0, 1, 1, 1, 1, 0},
+				 {0, 0, 0, 0, 1, 1, 1, 0},
+				 {0, 1, 0, 0, 1, 1, 1, 1},
+				 {0, 0, 0, 0, 0, 1, 1, 1},
+				 {1, 0, 1, 0, 0, 0, 1, 1},
+				 {0, 1, 0, 0, 0, 0, 0, 1},
+				 {0, 0, 0, 0, 0, 0, 0, 0}};
 		
-		Graph2 unDirGraph = new Graph2(Arrays.asList(new Edge(0, 1), new Edge(1, 2), new Edge(2, 3), 
-				 new Edge(2, 0)), 4);
+		int[][] visitedIsland={{0, 0, 0, 0, 0, 0, 0, 0},
+				 {0, 0, 0, 0, 0, 0, 0, 0},
+				 {0, 0, 0, 0, 0, 0, 0, 0},
+				 {0, 0, 0, 0, 0, 0, 0, 0},
+				 {0, 0, 0, 0, 0, 0, 0, 0},
+				 {0, 0, 0, 0, 0, 0, 0, 0},
+				 {0, 0, 0, 0, 0, 0, 0, 0},
+				 {0, 0, 0, 0, 0, 0, 0, 0}};
+		int connectedIslandCount = 0;
+		for(int i = 0; i < island.length; i ++) {
+			for(int j = 0; j < island[0].length; j ++) {
+				if(island[i][j] != 0 && visitedIsland[i][j] != 1) {
+					connectedIslandCount ++;
+					graph.findIsland(island, new Cell(i, j), visitedIsland);
+				}
+			}
+		}
+		System.out.println("Connected Island " + connectedIslandCount);
+		
+//		Graph2 unDirGraph = new Graph2(Arrays.asList(new Edge(0, 1), new Edge(1, 2), new Edge(2, 3), 
+//				 new Edge(2, 0)), 4);
 		//System.out.println(unDirGraph.detectCycleInDirectedGraph(unDirGraph, 0));
-		unDirGraph.detectCycleInUndirectedGraph(unDirGraph, 0);
+//		unDirGraph.detectCycleInUndirectedGraph(unDirGraph, 0);
 //		Graph2 dirGraph = new Graph2(Arrays.asList(new Edge(0, 1), new Edge(1, 2), new Edge(0, 2)), 3);
 //		System.out.println(dirGraph.detectCycleInDirectedGraph(dirGraph, 0));
 		
