@@ -47,7 +47,7 @@ public class BinaryTree {
 		
 		
 	}
-	
+	;
 	public static void main(String[] args) {
 		BinaryTree bt = new BinaryTree();
 		bt.insert(10);
